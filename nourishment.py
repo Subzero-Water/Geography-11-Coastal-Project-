@@ -164,12 +164,142 @@ class transitionDune(Scene):
 
 class dune(Scene):
     def construct(self):
-        return
+        
+        defn = Tex(r"\textbf{Definition} (Sand Dune Regeneration). Soft engineering strategy involving", font_size = 40).to_corner(UL)
+        defn1 = Tex("the creation or stabilization of small hills of sand.", font_size = 40).next_to(defn, DOWN, buff = 0.2).to_edge(LEFT)
+        source = Tex("GCSE Geography Textbook", font_size = 20).to_corner(DR, buff = 0.5)
+        definition = VGroup(defn, defn1, source)
+
+        bullet_points = [
+            Tex(r"$\bullet$ Absorb wave energy", font_size = 35),
+            Tex(r"$\bullet$ Exempli gratia: Building wooden fences", font_size = 35)
+        ]
+        points = VGroup(*bullet_points).arrange(DOWN, aligned_edge = LEFT, buff = 0.4).to_edge(LEFT)
+
+        title = Tex("Sand Dune Regeneration", font_size = 50).to_corner(UL, buff = 0.5)
+
+        self.wait(2)
+        self.play(Write(definition))
+        self.wait(2)
+
+        for bullet in bullet_points:
+            self.play(Write(bullet))
+            self.wait()
+        self.wait(2)
+
+        self.play(FadeOut(points), ReplacementTransform(definition, title))
+
+        horizontal_line = Line([-5, 2, 0], [5, 2, 0], color = BLUE)
+        vertical_line = Line([0, 3, 0], [0, -4, 0], color = BLUE)
+        
+        pro_text = Tex("Pros", color = GREEN, font_size = 40).next_to(vertical_line, LEFT).next_to(horizontal_line, UP).shift(LEFT * 4)
+        con_text = Tex("Cons", color = RED, font_size = 40).next_to(vertical_line, RIGHT).next_to(horizontal_line, UP).shift(RIGHT * 1)
+        
+        naturalis = [
+            Tex(r"$\bullet$ Very natural solution", font_size = 40),
+            Tex(r"$\bullet$ Can form new habitats", font_size = 40)
+        ]
+        left = VGroup(*naturalis).arrange(DOWN, aligned_edge = LEFT, buff = 0.4).next_to(pro_text, DOWN, buff = 1).shift(RIGHT * 1.2)
+
+        disadvantages = [
+            Tex(r"$\bullet$ Tourism restrictions", font_size = 40),
+            Tex(r"$\bullet$ Subjective eyesore", font_size = 40),
+            Tex(r"$\bullet$ Ecotourism", font_size = 40, color = GREEN)
+        ]
+        right = VGroup(*disadvantages).arrange(DOWN, aligned_edge = LEFT, buff = 0.4).next_to(con_text, DOWN, buff = 1).shift(RIGHT * 1.5)
+
+
+        inequality = Tex(r"$\mathrm{Ecotourism} \ll \mathrm{ Traditional tourism}$", font_size = 60, color = YELLOW).move_to(ORIGIN)
+
+        squiggly_line = FunctionGraph(
+            lambda x: 0.05 * np.sin(4 * PI * x),
+            x_range = [0, 3.3],
+            color = YELLOW
+        ).shift(RIGHT * 0.9, UP * 0.12)
+
+        self.play(Create(horizontal_line), Create(vertical_line))
+        self.wait()
+        self.play(Write(pro_text), Write(con_text))
+        self.wait(2)
+
+        for item in naturalis:
+            self.play(Write(item))
+            self.wait()
+        
+        for item in disadvantages:
+            self.play(Write(item))            
+            if item == disadvantages[1]:
+                self.wait()
+                self.play(Create(squiggly_line))
+                self.wait(5)
+                self.play(FadeOut(squiggly_line))
+            self.wait()
+        self.wait(2)
+
+        self.play(ReplacementTransform(VGroup(vertical_line, 
+        horizontal_line,
+        pro_text,
+        con_text,
+        left,
+        right
+        ), inequality))
+
+        self.wait(4)
+        self.play(*[FadeOut(mob) for mob in self.mobjects])
+        self.wait(2)
 
 class example(Scene):
     def construct(self):
-        return
+        title = Tex("Case Study", font_size = 70).move_to(ORIGIN)
+        smaller_title = Tex("Case Study: Pattaya", font_size = 40).to_corner(UL, buff = 0.5)
+
+        bullet = [
+            Tex(r"$\bullet$ 2.7km beach renourishment", font_size = 40),
+            Tex(r"$\bullet$ 429 million THB project", font_size = 40),
+            Tex(r"$\bullet$ Erosion rate $\approx 5 \frac{\mathrm{m}}{\mathrm{a}}$", font_size = 40),
+            Tex(r"$\bullet$ Tourism", font_size = 40)
+        ]
+        VGroup(*bullet).arrange(DOWN, aligned_edge = LEFT, buff = 0.4).to_edge(LEFT, buff = 0.5).shift(UP * 0.8)
+
+        self.wait(2)
+        self.play(Write(title))
+        self.wait(5)
+        self.play(ReplacementTransform(title, smaller_title))
+        self.wait(3)
+
+        for item in bullet:
+            self.play(Write(item))
+            self.wait(2) 
+        self.play(*[FadeOut(mob) for mob in self.mobjects])
+
+        source = Tex("Source: Elle's iPhone camera", font_size = 20).to_corner(DR, buff = 0.5)
+
+        self.play(FadeIn(source))
+        self.wait(10)
+        self.play(FadeOut(source))
+        self.wait(2)
+
+class quote(Scene):
+    def construct(self):    
+        quote = Tex("\"Without restoration and constant maintenance Pattaya beach was at risk of disappearing.\"", font_size=36)
+        quote.move_to(ORIGIN).shift(UP)
+        
+        author = Tex(r"$-$ Mr Ekkarat Khanthano, the director of the 6th Marine Region office in Pattaya", font_size=32, color=YELLOW)
+        author.next_to(quote, DOWN, buff=0.5)
+        
+        self.add(quote)
+
+        self.play(Write(quote), run_time=3) 
+        self.play(Write(author, shift=RIGHT * 0.2))
+        self.wait(3) 
+        self.play(FadeOut(VGroup(quote, author)))
+        self.wait(0.5)
 
 class conclusion(Scene):
     def construct(self):
-        return
+        title = Tex("Conclusion", font_size = 70).move_to(ORIGIN)
+
+        self.play(Write(title))
+        self.wait(10)
+        self.play(FadeOut(title))
+        self.wait(2)
