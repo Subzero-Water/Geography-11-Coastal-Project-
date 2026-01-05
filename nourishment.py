@@ -73,7 +73,79 @@ class beach(Scene):
 
 class longshoreDrift(Scene):
     def construct(self):
-        return
+
+        def wave(x):
+            return -(0.2 * np.sin(4 * x) + 0.3 * np.cos(x)) - 1
+    
+        coast_func = FunctionGraph(
+            lambda x: -(0.2 * np.sin(4 * x) + 0.3 * np.cos(x)) - 1,
+            color = YELLOW
+        )
+
+        prev_vect = []
+
+        for i in range(3):
+            prev_vect.append(Arrow(
+                start = [5.5 - i, 3.5, 0], #These vector objects need 3 coordinates
+                end = [4.5 - i, 2.5, 0],
+                buff = 0,
+                color = BLUE,
+                stroke_width = 6
+            ))
+        prevailing_wind = VGroup(*prev_vect)
+        prevailing_label = Tex("Prevailing wind", font_size = 40).next_to(prevailing_wind, DOWN, buff = 0.5)
+
+        long1_vect = []
+        long2_vect = []
+
+        for i in range(14):
+            x_pos = 7 - i
+            y_pos = wave(x_pos)
+            y_pos_new = wave(x_pos - 1)
+
+            long1_vect.append(Arrow(
+                start = [x_pos, y_pos , 0], #These vector objects need 3 coordinates
+                end = [x_pos - 1, y_pos - 1, 0],
+                buff = 0,
+                color = RED,
+                stroke_width = 6,
+                max_tip_length_to_length_ratio = 0.1,
+                max_stroke_width_to_length_ratio = 3
+            ))
+
+            long2_vect.append(Arrow(
+                start = [x_pos - 1, y_pos - 1, 0],
+                end = [x_pos - 1, y_pos_new, 0],
+                buff = 0,
+                color = RED,
+                stroke_width = 6,
+                max_tip_length_to_length_ratio= 0.1,
+                max_stroke_width_to_length_ratio = 3
+            ))
+
+        temporary_label = Tex("Temporary!", font_size = 50, color = YELLOW). to_corner(UL, buff = 0.5).shift(RIGHT * 2).shift(DOWN * 0.5)
+        long_vs_short = Tex(r"May be more expensive in the long run$^*$", font_size = 30, color = YELLOW).next_to(temporary_label, DOWN, buff = 0.3)
+        fine_details = Tex(r"$^*$This is clearly an argument that appeals to plausibility. More data is required to fully determine when it is indeed more expensive.", color = GRAY, font_size = 22).to_edge(DOWN).shift(RIGHT * 2.5)
+
+
+        self.wait(2)
+        self.play(Create(coast_func))
+        self.wait()
+        self.play(*[GrowArrow(arrow) for arrow in prev_vect], Write(prevailing_label))
+
+        for arrow1, arrow2 in zip(long1_vect, long2_vect):
+            self.play(GrowArrow(arrow1), run_time = 0.07)
+            self.play(GrowArrow(arrow2), run_time = 0.07)
+
+        self.wait(2)
+        self.play(Write(temporary_label))
+        self.wait(6)
+        self.play(Write(long_vs_short), Write(fine_details))
+        self.wait(6)
+        self.play(*[FadeOut(mob) for mob in self.mobjects])
+        self.wait(2)
+
+
 
 
 class dune(Scene):
