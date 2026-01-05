@@ -46,6 +46,33 @@ class seperation(Scene):
     
 class beach(Scene):
     def construct(self):
+
+        defn = Tex(r"\textbf{Definition} (Beach nourishment). Soft engineering strategy involving", font_size = 40).to_corner(UL)
+        defn1 = Tex("adding sand to the beach or in front of cliffs.", font_size = 40).next_to(defn, DOWN, buff = 0.2).to_edge(LEFT)
+        source = Tex("GCSE Geography Textbook", font_size = 20).to_corner(DR, buff = 0.5)
+        definition = VGroup(defn, defn1, source)
+
+        bullet_points = [
+            Tex(r"$\bullet$ Bigger beach", font_size = 40),
+            Tex(r"$\bullet$ Nice for tourists", font_size = 40),
+            Tex(r"$\bullet$ Absorb energy from incoming waves", font_size = 40),
+            Tex(r"$\Rightarrow$ Less coastal erosion", font_size = 40, color = YELLOW)
+        ]
+        points = VGroup(*bullet_points).arrange(DOWN, aligned_edge = LEFT, buff = 0.4).to_edge(LEFT).shift(UP * 0.5)
+
+        self.wait(2)
+        self.play(Write(definition))
+        self.wait(5)
+
+        for item in bullet_points:
+            self.play(Write(item))
+            self.wait(2) 
+
+        self.play(FadeOut(definition, points))
+        self.wait(2)
+
+class longshoreDrift(Scene):
+    def construct(self):
         return
 
 
