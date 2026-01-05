@@ -145,6 +145,20 @@ class longshoreDrift(Scene):
         self.play(*[FadeOut(mob) for mob in self.mobjects])
         self.wait(2)
 
+class transitionDune(Scene):
+    def construct(self):
+        strategies = [
+        Tex("Beach Nourishment", font_size = 50, color = YELLOW).scale(1.2),
+        Tex("Dune Nourishment", font_size = 50)
+    ]
+        group = VGroup(*strategies).arrange(RIGHT, buff = 1).move_to(ORIGIN).shift(UP * 0.5)
+
+        self.play(FadeIn(group))
+        self.wait()
+        self.play(strategies[0].animate.scale(1/1.2).set_color(WHITE), strategies[1].animate.scale(1.2).set_color(YELLOW))
+        self.wait(2)
+        self.play(*[FadeOut(mob) for mob in self.mobjects])
+        self.wait(2)
 
 
 
