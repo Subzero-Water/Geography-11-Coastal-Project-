@@ -27,7 +27,22 @@ class sectionTitle(Scene):
 
 class seperation(Scene):
     def construct(self):
-        return
+
+        strategies = [
+        Tex("Beach Nourishment", font_size = 50),
+        Tex("Dune Nourishment", font_size = 50)
+        ]
+        group = VGroup(*strategies).arrange(RIGHT, buff = 1).move_to(ORIGIN).shift(UP * 0.5)
+
+        self.wait(2)
+        self.play(Write(group))
+        self.wait(2)
+        self.play(strategies[0].animate.scale(1.2).set_color(YELLOW))
+        self.wait(2)
+        self.play(*[FadeOut(mob) for mob in self.mobjects])
+        self.wait(2)
+
+
     
 class beach(Scene):
     def construct(self):
