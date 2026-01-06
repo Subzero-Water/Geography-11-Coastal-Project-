@@ -63,8 +63,8 @@ class Bangkok2050(Scene):
         # Left-aligned text scene
         # --------------------
 
-        bullet1 = Tex("- Much more flooding")
-        bullet2 = Tex("- At times underwater")
+        bullet1 = MathTex(r"\bullet \text{ Much more flooding}")
+        bullet2 = MathTex(r"\bullet \text{ At times underwater}")
 
         bullet1.to_edge(LEFT, buff=1).shift(UP * 1.2)
         bullet2.align_to(bullet1, LEFT)
@@ -77,7 +77,7 @@ class Bangkok2050(Scene):
         self.wait(BUFFER)
 
         # Merge into one statement
-        unsafe_homes = Tex("- Unsafe homes")
+        unsafe_homes = MathTex(r"\bullet \text{ Unsafe homes}")
         unsafe_homes.move_to(bullet1.get_center())
         unsafe_homes.align_to(bullet1, LEFT)
 
@@ -118,8 +118,8 @@ class Bangkok2050(Scene):
         
         self.play(FadeOut(notStonksImage))
         
-        CapitalText=Tex("- Capital must be relocated").to_edge(LEFT).shift(UP)
-        TouristText=Tex("- Degraded touristic industry").to_edge(LEFT)
+        CapitalText=MathTex(r"\bullet \text{ Capital must be relocated}").to_edge(LEFT).shift(UP)
+        TouristText=MathTex(r"\bullet \text{ Degraded touristic industry}").to_edge(LEFT)
         TouristSubText=Tex("30.3m visitors per year").to_edge(LEFT*2).shift(DOWN).scale(0.9)
         
         self.play(Write(CapitalText))
