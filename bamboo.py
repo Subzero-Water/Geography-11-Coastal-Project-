@@ -96,8 +96,11 @@ class seaWallAnimation(Scene):
     
 class example(Scene):
     def construct(self):
-        return
 
-class conclusion(Scene):
-    def construct(self):
-        return
+        title = Tex("Example", font_size = 50).to_corner(UL, buff = 0.5)
+        source = Tex("Source: Mekongeye", font_size = 25).to_corner(DR, buff = 0.5)
+
+        self.play(Write(title), Write(source))
+        self.wait()
+        self.play(FadeOut(source), Unwrite(title, reverse = False))
+        self.wait()
