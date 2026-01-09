@@ -2,7 +2,7 @@
 
 ---
 
-This is the Github repository for our Geography project.
+This is the GitHub repository for our Geography project.
 
 To access this project yourself, please just run the following command in a terminal emulator of your choice (e.g. Powershell): 
 ```bash
